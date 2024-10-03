@@ -1,18 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../";
+import type { InitialUser, User } from "../../types/user";
 
-export type User = {
-  id?: number;
-  email?: string;
-  role?: "ADMIN" | "USER";
-};
-
-export interface UserState {
-  isAuth: boolean;
-  user: User;
-}
-
-const initialState: UserState = {
+const initialState: InitialUser = {
   isAuth: false,
   user: {},
 };
@@ -24,7 +14,7 @@ export const userSlice = createSlice({
     setIsAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;
     },
-    setUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<Partial<User>>) => {
       state.user = action.payload;
     },
   },

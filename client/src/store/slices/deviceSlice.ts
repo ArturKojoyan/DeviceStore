@@ -1,37 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../";
+import type { Device, Devices, InitialDevice } from "../../types/device";
 
-export interface DeviceInfo {
-  id: number;
-  title: string;
-  description: string;
-  deviceId: number;
-}
-
-export interface Device {
-  id: number;
-  name: string;
-  price: number;
-  rating: number;
-  img: string;
-  info: Array<DeviceInfo>;
-  typeId: number;
-  brandId: number;
-}
-
-export type EmptyObj = Record<string, never>;
-
-export type Devices = Array<Device>;
-
-export interface InitialState {
-  devices: Devices;
-  currentDevice: Device | EmptyObj;
-  page: number;
-  totalCount: number;
-  limit: number;
-}
-
-const initialState: InitialState = {
+const initialState: InitialDevice = {
   devices: [],
   currentDevice: {},
   page: 1,
