@@ -8,8 +8,12 @@ function App() {
   return (
     <Router>
       <Provider store={store}>
-        <Navbar />
-        <AppRouter />
+        <header>
+          <Navbar />
+        </header>
+        <main>
+          <AppRouter />
+        </main>
       </Provider>
     </Router>
   );

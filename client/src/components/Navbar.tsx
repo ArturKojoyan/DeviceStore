@@ -1,4 +1,4 @@
-import { FunctionComponent as FC } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import {
 } from "../store/slices/userSlice";
 import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils";
 
-const NavbarComponent = () => {
+const NavbarComponent: FC = () => {
   const isAuth = useSelector(isAuthSelector);
   const user = useSelector(getUserSelector);
   const dispatch = useDispatch();
@@ -26,30 +26,29 @@ const NavbarComponent = () => {
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary  justify-content-between">
+    <Navbar bg="primary" data-bs-theme="light" expand="lg">
       <Container>
-        <Nav.Link href={SHOP_ROUTE}>Home</Nav.Link>
+        <Nav.Link href={SHOP_ROUTE} className="text-white">
+          Home
+        </Nav.Link>
         {isAuth ? (
           <Nav className="ml-auto">
             {user.role === "ADMIN" && (
               <Button
-                variant="outline-dark"
+                variant="light"
                 onClick={() => navigate(ADMIN_ROUTE)}
                 className="me-2"
               >
                 Admin Panel
               </Button>
             )}
-            <Button variant="outline-dark" className="ml-4" onClick={logOut}>
+            <Button variant="light" className="ml-4" onClick={logOut}>
               Logout
             </Button>
           </Nav>
         ) : (
           <Nav className="ml-auto">
-            <Button
-              variant="outline-dark"
-              onClick={() => navigate(LOGIN_ROUTE)}
-            >
+            <Button variant="light" onClick={() => navigate(LOGIN_ROUTE)}>
               Authorization
             </Button>
           </Nav>
@@ -59,4 +58,4 @@ const NavbarComponent = () => {
   );
 };
 
-export default NavbarComponent as FC;
+export default NavbarComponent;

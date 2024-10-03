@@ -62,7 +62,7 @@ const Auth = () => {
                 Have account ? <Nav.Link href={LOGIN_ROUTE}>Login</Nav.Link>
               </div>
             )}
-            <Button variant="outline-success" className="mt-3" onClick={action}>
+            <Button variant="primary" className="mt-3" onClick={action}>
               {isLogin ? "Login" : "Register"}
             </Button>
           </Row>
