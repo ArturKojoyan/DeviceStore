@@ -5,7 +5,7 @@ const { User, Basket } = require("../models/models");
 
 const generateJwt = (id, email, role) =>
   jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
-    expiresIn: "24h",
+    expiresIn: "6h",
   });
 
 class UserController {

@@ -19,7 +19,7 @@ module.exports = function (role) {
       req.user = decodedInfo;
       next();
     } catch (error) {
-      res.status(401).json({ message: "user is not authenticated" });
+      res.status(401).json({ message: "user is not authenticated", error });
     }
   };
 };

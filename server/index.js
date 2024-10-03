@@ -5,10 +5,7 @@ const fileUpload = require("express-fileupload");
 const path = require("path");
 const sequelize = require("./db");
 const models = require("./models/models");
-const userRouter = require("./routes/userRouter");
-const brandRouter = require("./routes/brandRouter");
-const deviceRouter = require("./routes/deviceRouter");
-const typeRouter = require("./routes/typeRouter");
+const router = require("./routes");
 const errorHandler = require("./middleware/ErrorHandling");
 
 const PORT = process.env.PORT || 3003;
@@ -20,17 +17,14 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "static")));
 app.use(fileUpload({}));
 
-app.use("/api/user", userRouter);
-app.use("/api/brand", brandRouter);
-app.use("/api/device", deviceRouter);
-app.use("/api/type", typeRouter);
+app.use("/api", router);
 
 app.get("/", (req, res) => res.send("Hello!"));
 
 // last middleware
 app.use(errorHandler);
 
-const start = async () => {
+const start = async () => { 
   try {
     await sequelize.authenticate();
     await sequelize.sync();
