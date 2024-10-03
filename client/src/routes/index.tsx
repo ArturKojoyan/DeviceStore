@@ -1,47 +1,17 @@
-import { FC, Suspense, useEffect, useState } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, Suspense, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Spinner } from "react-bootstrap";
 import { privateRoutes, publicRoutes } from "./routes";
 import { isAuthSelector } from "../store/slices/userSlice";
-import {
-  getDevices,
-  setDevices,
-  setTotalCount,
-} from "../store/slices/deviceSlice";
-import { fetchBrands, fetchDevices, fetchTypes } from "../axios/deviceApi";
-import { getUserSelector, setIsAuth, setUser } from "../store/slices/userSlice";
-import { check } from "../axios/userApi";
-import { LOGIN_ROUTE } from "../utils";
-import { setTypes } from "../store/slices/typeSlice";
-import { setBrands } from "../store/slices/brandSlice";
+import { useCheckIsAuth, useFetchData } from "./hooks";
 
 const AppRouter: FC = () => {
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const isAuth = useSelector(isAuthSelector);
-  const devices = useSelector(getDevices);
-  const user = useSelector(getUserSelector);
 
-  useEffect(() => {
-    check()
-      .then((data) => {
-        dispatch(setIsAuth(true));
-        dispatch(setUser(data));
-      })
-      .catch(() => navigate(LOGIN_ROUTE))
-      .finally(() => setLoading(false));
-  }, [dispatch, navigate, setLoading]);
-
-  useEffect(() => {
-    fetchTypes().then((data) => dispatch(setTypes(data)));
-    fetchBrands().then((data) => dispatch(setBrands(data)));
-    fetchDevices().then((data) => {
-      dispatch(setDevices(data.rows));
-      dispatch(setTotalCount(data.count));
-    });
-  }, [dispatch]);
+  useCheckIsAuth(setLoading);
+  useFetchData();
 
   if (loading) {
     return (

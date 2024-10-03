@@ -6,22 +6,22 @@ import {
   getCurrentDevice,
   setCurrentDevice,
 } from "../store/slices/deviceSlice";
-import { fetchDevice } from "../axios/deviceApi";
+import { useLazyFetchDeviceQuery } from "../store/services/DeviceService";
 import bigStar from "../assets/bigStar.png";
 
 const Device: FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const currentDevice = useSelector(getCurrentDevice);
-  console.log("🚀 ~ currentDevice:", currentDevice);
+  const [fetchDevice] = useLazyFetchDeviceQuery();
 
   useEffect(() => {
     if (id) {
-      fetchDevice(id).then((device) => {
-        dispatch(setCurrentDevice(device));
-      });
+      fetchDevice(id)
+        .unwrap()
+        .then((resp) => dispatch(setCurrentDevice(resp)));
     }
-  }, [dispatch, id]);
+  }, [id, fetchDevice, dispatch]);
 
   if (!currentDevice.id) {
     return <></>;
@@ -34,7 +34,8 @@ const Device: FC = () => {
           <Image
             width={300}
             height={300}
-            src={"http://localhost:3003/" + currentDevice.img}
+            src={process.env.REACT_APP_API_URL + currentDevice.img}
+            alt="device"
           />
         </Col>
         <Col md={4}>
