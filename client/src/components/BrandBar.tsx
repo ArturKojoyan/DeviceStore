@@ -15,33 +15,20 @@ const BrandBar: FC = () => {
   return (
     <>
       <h5 className="mt-2">filter by brand</h5>
-      <ListGroup>
+      <ListGroup role="list">
         {brands.map((item) => (
           <ListGroup.Item
             key={item.id}
             active={item.id === selectedBrand.id}
             onClick={() => dispatch(setSelectedBrand(item))}
             style={{ cursor: "pointer" }}
+            role="listitem"
           >
             {item.name}
           </ListGroup.Item>
         ))}
       </ListGroup>
     </>
-
-    // <Row className="d-flex">
-    //   {brands.map((item) => (
-    //     <Card
-    //       key={item.id}
-    //       className="p-3"
-    //       style={{ cursor: "pointer" }}
-    //       onClick={() => dispatch(setSelectedBrand(item))}
-    //       border={item.id === selectedBrand.id ? "danger" : "light"}
-    //     >
-    //       {item.name}
-    //     </Card>
-    //   ))}
-    // </Row>
   );
 };
 

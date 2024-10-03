@@ -15,13 +15,14 @@ const TypeBar: FC = () => {
   return (
     <>
       <h5>filter by type</h5>
-      <ListGroup>
+      <ListGroup role="list">
         {types.map((item) => (
           <ListGroup.Item
             key={item.id}
             active={item.id === selectedType.id}
             onClick={() => dispatch(setSelectedType(item))}
             style={{ cursor: "pointer" }}
+            role="listitem"
           >
             {item.name}
           </ListGroup.Item>
