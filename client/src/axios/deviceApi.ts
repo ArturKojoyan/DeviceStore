@@ -1,31 +1,19 @@
 import { authHost, host } from ".";
-import { Brand, Brands } from "../store/slices/brandSlice";
-import { Device, Devices } from "../store/slices/deviceSlice";
-import { Type, Types } from "../store/slices/typeSlice";
-
-type Message = {
-  success: boolean;
-  message: string;
-};
-
-interface Resp<T> {
-  data: T;
-}
-
-interface ManyType<T> {
-  count: number;
-  rows: T;
-}
+import type { Many, Message } from "../types/api";
+import type { Resp } from "../types/common";
+import type { Device, Devices } from "../types/device";
+import type { DeviceBrand, DeviceBrands } from "../types/deviceBrand";
+import type { DeviceType, DeviceTypes } from "../types/deviceType";
 
 export const createType = async (name: string) => {
-  const { data } = await authHost.post<string, Resp<Type>>("api/type", {
+  const { data } = await authHost.post<string, Resp<DeviceType>>("api/type", {
     name,
   });
   return data;
 };
 
 export const fetchTypes = async () => {
-  const { data } = await host.get<string, Resp<Types>>("api/type");
+  const { data } = await host.get<string, Resp<DeviceTypes>>("api/type");
   return data;
 };
 
@@ -37,14 +25,14 @@ export const deleteType = async (name: string) => {
 };
 
 export const createBrand = async (name: string) => {
-  const { data } = await authHost.post<string, Resp<Brand>>("api/brand", {
+  const { data } = await authHost.post<string, Resp<DeviceBrand>>("api/brand", {
     name,
   });
   return data;
 };
 
 export const fetchBrands = async () => {
-  const { data } = await host.get<string, Resp<Brands>>("api/brand");
+  const { data } = await host.get<string, Resp<DeviceBrands>>("api/brand");
   return data;
 };
 
@@ -74,9 +62,8 @@ export const fetchDevices = async (
   page = 1,
   limit = 4
 ) => {
-  const { data } = await host.get<string, Resp<ManyType<Devices>>>(
-    "api/device",
-    { params: { typeId, brandId, page, limit } }
-  );
+  const { data } = await host.get<string, Resp<Many<Devices>>>("api/device", {
+    params: { typeId, brandId, page, limit },
+  });
   return data;
 };
