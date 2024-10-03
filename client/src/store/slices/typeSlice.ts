@@ -1,21 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../";
+import type {
+  DeviceType,
+  DeviceTypes,
+  InitialDeviceType,
+} from "../../types/deviceType";
+import { EmptyObj } from "../../types/common";
 
-export interface Type {
-  id: number;
-  name: string;
-}
-
-export type EmptyObj = Record<string, never>;
-
-export type Types = Array<Type>;
-
-export interface InitialType {
-  types: Types;
-  selectedType: Type | EmptyObj;
-}
-
-const initialState: InitialType = {
+const initialState: InitialDeviceType = {
   types: [],
   selectedType: {},
 };
@@ -24,10 +16,10 @@ export const typeSlice = createSlice({
   name: "type",
   initialState,
   reducers: {
-    setTypes: (currentState, action: PayloadAction<Types>) => {
+    setTypes: (currentState, action: PayloadAction<DeviceTypes>) => {
       currentState.types = action.payload;
     },
-    updateTypes: (currentState, action: PayloadAction<Type>) => {
+    updateTypes: (currentState, action: PayloadAction<DeviceType>) => {
       currentState.types.push(action.payload);
     },
     removeType: (currentState, action: PayloadAction<string>) => {
@@ -35,7 +27,10 @@ export const typeSlice = createSlice({
         (type) => type.name !== action.payload
       );
     },
-    setSelectedType: (currentState, action: PayloadAction<Type>) => {
+    setSelectedType: (
+      currentState,
+      action: PayloadAction<DeviceType | EmptyObj>
+    ) => {
       currentState.selectedType = action.payload;
     },
   },

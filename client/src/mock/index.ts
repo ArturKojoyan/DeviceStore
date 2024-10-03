@@ -1,0 +1,3 @@
+export const mockShortText = "mock text";
+export const mockLongText =
+  "Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, Lorem ispum, ";

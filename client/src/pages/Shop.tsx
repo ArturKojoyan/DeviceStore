@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Pages from "../components/Pages";
+import Pagination from "../components/Pagination";
 import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";
 import DeviceList from "../components/DeviceList";
@@ -13,8 +13,8 @@ import {
   setDevices,
   setTotalCount,
 } from "../store/slices/deviceSlice";
-import { getSelectedType } from "../store/slices/typeSlice";
-import { getSelectedBrand } from "../store/slices/brandSlice";
+import { getSelectedType, setSelectedType } from "../store/slices/typeSlice";
+import { getSelectedBrand, setSelectedBrand } from "../store/slices/brandSlice";
 
 const Shop: FC = () => {
   const dispatch = useDispatch();
@@ -24,6 +24,11 @@ const Shop: FC = () => {
   const currentPage = useSelector(getPage);
   const selectedType = useSelector(getSelectedType);
   const selectedBrand = useSelector(getSelectedBrand);
+
+  const resetFilters = () => {
+    dispatch(setSelectedType({}));
+    dispatch(setSelectedBrand({}));
+  };
 
   useEffect(() => {
     fetchDevices(selectedType.id, selectedBrand.id, currentPage, limit).then(
@@ -40,10 +45,19 @@ const Shop: FC = () => {
         <Col md={3}>
           <TypeBar />
           <BrandBar />
+          {(selectedType.id || selectedBrand.id) && (
+            <Button
+              variant="outline-dark"
+              className="mt-3"
+              onClick={resetFilters}
+            >
+              reset filters
+            </Button>
+          )}
         </Col>
         <Col md={9}>
           <DeviceList />
-          <Pages />
+          <Pagination />
         </Col>
       </Row>
     </Container>

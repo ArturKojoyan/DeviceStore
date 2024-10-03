@@ -1,21 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../";
+import type {
+  DeviceBrand,
+  DeviceBrands,
+  InitialDeviceBrand,
+} from "../../types/deviceBrand";
+import { EmptyObj } from "../../types/common";
 
-export interface Brand {
-  id: number;
-  name: string;
-}
-
-export type EmptyObj = Record<string, never>;
-
-export type Brands = Array<Brand>;
-
-export interface InitialType {
-  brands: Brands;
-  selectedBrand: Brand | EmptyObj;
-}
-
-const initialState: InitialType = {
+const initialState: InitialDeviceBrand = {
   brands: [],
   selectedBrand: {},
 };
@@ -24,10 +16,10 @@ export const brandSlice = createSlice({
   name: "brand",
   initialState,
   reducers: {
-    setBrands: (currentState, action: PayloadAction<Brands>) => {
+    setBrands: (currentState, action: PayloadAction<DeviceBrands>) => {
       currentState.brands = action.payload;
     },
-    updateBrands: (currentState, action: PayloadAction<Brand>) => {
+    updateBrands: (currentState, action: PayloadAction<DeviceBrand>) => {
       currentState.brands.push(action.payload);
     },
     removeBrand: (currentState, action: PayloadAction<string>) => {
@@ -35,7 +27,10 @@ export const brandSlice = createSlice({
         (brand) => brand.name !== action.payload
       );
     },
-    setSelectedBrand: (currentState, action: PayloadAction<Brand>) => {
+    setSelectedBrand: (
+      currentState,
+      action: PayloadAction<DeviceBrand | EmptyObj>
+    ) => {
       currentState.selectedBrand = action.payload;
     },
   },

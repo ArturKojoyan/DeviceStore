@@ -27,7 +27,7 @@ export const privateRoutes = [
 
 export const publicRoutes = [
   {
-    path: Device_ROUTE + '/:id',
+    path: Device_ROUTE + "/:id",
     Component: Device,
   },
   {

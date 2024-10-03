@@ -11,6 +11,7 @@ import {
   getSelectedBrand,
   setSelectedBrand,
 } from "../../store/slices/brandSlice";
+import { useCreateDeviceMutation } from "../../store/services/DeviceService";
 import {
   DeviceStateType,
   Info,
@@ -18,7 +19,6 @@ import {
   deviceReducer,
   initialState,
 } from "./deviceReducer";
-import { createDevice } from "../../axios/deviceApi";
 
 const { Body, Header, Footer, Title } = Modal;
 
@@ -34,9 +34,8 @@ const CreateDevice: FC<PROPS> = ({ show, handleClose }) => {
   const dispatch = useDispatch();
   const selectedBrand = useSelector(getSelectedBrand);
   const selectedType = useSelector(getSelectedType);
-  console.log("🚀 ~ selectedType:", selectedType);
-  console.log("🚀 ~ selectedBrand:", selectedBrand);
-  console.log("🚀 ~ deviceState:", deviceState);
+  const [createDevice, { data }] = useCreateDeviceMutation();
+  console.log("🚀 ~ data:", data);
 
   const addInfo = () => {
     setDeviceState({
@@ -60,7 +59,7 @@ const CreateDevice: FC<PROPS> = ({ show, handleClose }) => {
     });
   };
 
-  const addDevice = (deviceState: DeviceStateType) => {
+  const addDevice = async (deviceState: DeviceStateType) => {
     console.log(deviceState, "deviceState");
     const formData = new FormData();
     formData.append("name", deviceState.name);
@@ -72,7 +71,8 @@ const CreateDevice: FC<PROPS> = ({ show, handleClose }) => {
     formData.append("brandId", String(selectedBrand.id));
     formData.append("info", JSON.stringify(deviceState.info));
 
-    createDevice(formData).then((data) => handleClose());
+    await createDevice(formData);
+    handleClose();
   };
 
   return (
